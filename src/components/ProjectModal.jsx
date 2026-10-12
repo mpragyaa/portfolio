@@ -72,22 +72,51 @@ export default function ProjectModal({ project, onClose }) {
         </div>
 
         {/* Project Title */}
-        <h2 id="modal-title" className="font-headline font-bold text-3xl sm:text-4xl text-white uppercase tracking-tight mb-2">
-          {project.title}
-        </h2>
+        {project.demoUrl ? (
+          <a
+            href={project.demoUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-headline font-bold text-3xl sm:text-4xl text-white hover:text-[#38BDF8] uppercase tracking-tight mb-2 inline-flex items-center gap-3 transition-colors no-underline group"
+            aria-label={`Visit ${project.title} website`}
+          >
+            <span>{project.title}</span>
+            <ExternalLink size={20} className="opacity-40 group-hover:opacity-100 transition-opacity" />
+          </a>
+        ) : (
+          <h2 id="modal-title" className="font-headline font-bold text-3xl sm:text-4xl text-white uppercase tracking-tight mb-2">
+            {project.title}
+          </h2>
+        )}
         <p className="font-mono text-sm text-[#A1A1AA] mb-8">
           {project.tagline}
         </p>
 
         {/* Project Cover Frame */}
         {project.coverImage && (
-          <div className="w-full aspect-video max-h-72 mb-8 overflow-hidden rounded border border-white/15 bg-black/60">
-            <img
-              src={project.coverImage}
-              alt={`${project.title} Cover`}
-              className="w-full h-full object-cover object-center"
-            />
-          </div>
+          project.demoUrl ? (
+            <a
+              href={project.demoUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block w-full aspect-video max-h-72 mb-8 overflow-hidden rounded border border-white/15 hover:border-white/50 bg-black/60 transition-colors cursor-pointer group"
+              aria-label={`Visit ${project.title} website`}
+            >
+              <img
+                src={project.coverImage}
+                alt={`${project.title} Cover`}
+                className="w-full h-full object-cover object-center group-hover:scale-[1.02] transition-transform duration-500"
+              />
+            </a>
+          ) : (
+            <div className="w-full aspect-video max-h-72 mb-8 overflow-hidden rounded border border-white/15 bg-black/60">
+              <img
+                src={project.coverImage}
+                alt={`${project.title} Cover`}
+                className="w-full h-full object-cover object-center"
+              />
+            </div>
+          )
         )}
 
         {/* Core Description */}

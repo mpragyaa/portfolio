@@ -4,18 +4,18 @@ import { GithubIcon } from './Icons';
 import { projects, unfeaturedProjects } from '../data/projectsData';
 
 export default function WorkScene({ onSelectProject, scrollProgress = 0 }) {
-  // Dynamic spatial 3D depth for each project as user traverses space
+  // Clean responsive scaling without negative 3D depth to guarantee 100% reliable click hit-testing
   const getProjectDepth = (centerP) => {
     const delta = Math.abs(scrollProgress - centerP);
-    const z = Math.max(-280, -delta * 1400);
-    const scale = Math.max(0.92, 1 - delta * 0.45);
-    const opacity = Math.min(1, Math.max(0.45, 1 - delta * 2.8));
-    const tilt = (scrollProgress - centerP) * 3.5;
+    const scale = Math.max(0.97, 1 - delta * 0.12);
+    const opacity = Math.min(1, Math.max(0.7, 1 - delta * 1.5));
     return {
-      transform: `translate3d(0, 0, ${z}px) scale(${scale}) rotateX(${tilt}deg)`,
       opacity: opacity,
-      transition: 'transform 0.12s ease-out, opacity 0.12s ease-out',
-      transformStyle: 'preserve-3d',
+      transform: `scale(${scale})`,
+      transition: 'opacity 0.2s ease-out, transform 0.2s ease-out',
+      position: 'relative',
+      zIndex: 20,
+      pointerEvents: 'auto',
     };
   };
 
@@ -29,7 +29,7 @@ export default function WorkScene({ onSelectProject, scrollProgress = 0 }) {
         maxWidth: '1440px',
         margin: '0 auto',
       }}
-      className="md:px-12 lg:px-20 preserve-3d"
+      className="md:px-12 lg:px-20 relative z-20"
     >
       {/* Section Header Track with Generous Breathing Room */}
       <div className="flex flex-wrap items-center justify-between border-b border-[rgba(255,255,255,0.1)] pb-5 mb-20 gap-4">
@@ -74,9 +74,18 @@ export default function WorkScene({ onSelectProject, scrollProgress = 0 }) {
                 </span>
               </div>
 
-              <h3 className="font-headline font-bold text-3xl sm:text-4xl md:text-5xl text-white tracking-tight mb-5 leading-tight">
-                {projects[0].title}
-              </h3>
+              <div className="mb-5">
+                <a
+                  href={projects[0].demoUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-headline font-bold text-3xl sm:text-4xl md:text-5xl text-white hover:text-[#38BDF8] tracking-tight leading-tight transition-colors no-underline inline-flex items-center gap-3 group/title"
+                  aria-label="Visit Azzurra company website"
+                >
+                  <span>{projects[0].title}</span>
+                  <ExternalLink size={24} className="opacity-40 group-hover/title:opacity-100 group-hover/title:translate-x-1 group-hover/title:-translate-y-1 transition-all" />
+                </a>
+              </div>
 
               <p className="text-sm sm:text-base text-[#D4D4D8] font-body leading-relaxed mb-8">
                 {projects[0].description}
@@ -157,13 +166,19 @@ export default function WorkScene({ onSelectProject, scrollProgress = 0 }) {
 
             {/* Stylized Clinical Storefront Visual Frame / Cover Frame */}
             {projects[0].coverImage ? (
-              <div className="relative my-auto w-full h-full min-h-[220px] max-h-[340px] overflow-hidden rounded border border-white/20 bg-black/60">
+              <a
+                href={projects[0].demoUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="relative my-auto w-full h-full min-h-[220px] max-h-[340px] overflow-hidden rounded border border-white/20 hover:border-[#38BDF8]/60 bg-black/60 block cursor-pointer transition-colors group/img"
+                aria-label="Visit Azzurra company website"
+              >
                 <img
                   src={projects[0].coverImage}
                   alt={`${projects[0].title} Cover Frame`}
-                  className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-[1.02]"
+                  className="w-full h-full object-cover object-center transition-transform duration-700 group-hover/img:scale-[1.03]"
                 />
-              </div>
+              </a>
             ) : (
               <div className="relative my-auto w-full h-52 flex items-center justify-center">
                 <div className="w-full max-w-sm bg-[#0B0F17] border border-[#38BDF8]/30 p-5 rounded shadow-[0_15px_40px_rgba(56,189,248,0.1)] relative">
@@ -351,9 +366,18 @@ export default function WorkScene({ onSelectProject, scrollProgress = 0 }) {
                 </span>
               </div>
 
-              <h3 className="font-headline font-bold text-3xl sm:text-4xl md:text-5xl text-white tracking-tight mb-3 leading-tight">
-                {projects[2].title}
-              </h3>
+              <div className="mb-3">
+                <a
+                  href={projects[2].demoUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-headline font-bold text-3xl sm:text-4xl md:text-5xl text-white hover:text-[#38BDF8] tracking-tight leading-tight transition-colors no-underline inline-flex items-center gap-3 group/title"
+                  aria-label="Visit Episcope live deployment"
+                >
+                  <span>{projects[2].title}</span>
+                  <ExternalLink size={24} className="opacity-40 group-hover/title:opacity-100 group-hover/title:translate-x-1 group-hover/title:-translate-y-1 transition-all" />
+                </a>
+              </div>
               <p className="font-mono text-xs sm:text-sm text-[#A1A1AA] uppercase tracking-wider mb-5">
                 {projects[2].headline}
               </p>
@@ -437,13 +461,19 @@ export default function WorkScene({ onSelectProject, scrollProgress = 0 }) {
 
             {/* Monochromatic Graph Network Visual / Cover Frame */}
             {projects[2].coverImage ? (
-              <div className="relative my-auto w-full h-full min-h-[220px] max-h-[340px] overflow-hidden rounded border border-white/20 bg-black/60">
+              <a
+                href={projects[2].demoUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="relative my-auto w-full h-full min-h-[220px] max-h-[340px] overflow-hidden rounded border border-white/20 hover:border-white/60 bg-black/60 block cursor-pointer transition-colors group/img"
+                aria-label="Visit Episcope live deployment"
+              >
                 <img
                   src={projects[2].coverImage}
                   alt={`${projects[2].title} Cover Frame`}
-                  className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-[1.02]"
+                  className="w-full h-full object-cover object-center transition-transform duration-700 group-hover/img:scale-[1.03]"
                 />
-              </div>
+              </a>
             ) : (
               <div className="relative my-auto w-full h-56 flex items-center justify-center">
                 <div className="relative w-64 h-48 border border-white/10 bg-[#0A0A0A] bg-grid-pattern flex items-center justify-center">
@@ -497,13 +527,19 @@ export default function WorkScene({ onSelectProject, scrollProgress = 0 }) {
 
             {/* Monolithic Chrome Object Composition / Cover Frame */}
             {projects[3].coverImage ? (
-              <div className="relative my-auto w-full h-full min-h-[220px] max-h-[340px] overflow-hidden rounded border border-white/20 bg-black/60">
+              <a
+                href={projects[3].demoUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="relative my-auto w-full h-full min-h-[220px] max-h-[340px] overflow-hidden rounded border border-white/20 hover:border-white/60 bg-black/60 block cursor-pointer transition-colors group/img"
+                aria-label="Visit Magppie company website"
+              >
                 <img
                   src={projects[3].coverImage}
                   alt={`${projects[3].title} Cover Frame`}
-                  className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-[1.02]"
+                  className="w-full h-full object-cover object-top transition-transform duration-700 group-hover/img:scale-[1.03]"
                 />
-              </div>
+              </a>
             ) : (
               <div className="relative my-auto w-full h-56 flex items-center justify-center">
                 <div className="relative w-44 h-44 border border-white/40 bg-gradient-to-br from-[#1C1C1E] via-[#0A0A0A] to-[#2C2C2E] flex flex-col items-center justify-center shadow-[0_20px_50px_rgba(255,255,255,0.08)] transform rotate-6 hover:rotate-0 transition-transform duration-700">
@@ -537,9 +573,18 @@ export default function WorkScene({ onSelectProject, scrollProgress = 0 }) {
                 </span>
               </div>
 
-              <h3 className="font-headline font-bold text-3xl sm:text-4xl md:text-5xl text-white tracking-tight mb-5 leading-tight">
-                {projects[3].title}
-              </h3>
+              <div className="mb-5">
+                <a
+                  href={projects[3].demoUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-headline font-bold text-3xl sm:text-4xl md:text-5xl text-white hover:text-[#38BDF8] tracking-tight leading-tight transition-colors no-underline inline-flex items-center gap-3 group/title"
+                  aria-label="Visit Magppie company website"
+                >
+                  <span>{projects[3].title}</span>
+                  <ExternalLink size={24} className="opacity-40 group-hover/title:opacity-100 group-hover/title:translate-x-1 group-hover/title:-translate-y-1 transition-all" />
+                </a>
+              </div>
 
               <p className="text-sm sm:text-base text-[#D4D4D8] font-body leading-relaxed mb-8">
                 {projects[3].description}
