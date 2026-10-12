@@ -148,6 +148,16 @@ export default function OutroScene({ scrollProgress = 0 }) {
           <span>© 2026 PRAGYA MEHTA. ALL RIGHTS RESERVED.</span>
           <span className="mx-2 hidden sm:inline">|</span>
           <span className="hidden sm:inline">ENGINEERED WITH REACT, THREE.JS &amp; GSAP</span>
+          <span className="mx-2 hidden sm:inline">•</span>
+          <a
+            href="https://github.com/mpragyaa/portfolio"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-white transition-colors no-underline inline-flex items-center gap-1 text-[#A1A1AA]"
+          >
+            <span>PORTFOLIO REPO</span>
+            <ArrowUpRight size={11} />
+          </a>
         </div>
 
         <button
